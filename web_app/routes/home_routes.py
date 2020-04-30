@@ -2,7 +2,7 @@
 # web_app/routes/home_routes.py
 
 from flask import Blueprint, render_template, flash, redirect, request
-from app.order_service import restaurant_list, CFA_items, EPI_items, subtotal_calc
+from app.order_service import restaurant_list, CFA_items, EPI_items, subtotal_calc, choices_converter, to_usd
 
 home_routes = Blueprint("home_routes", __name__)
 
@@ -32,24 +32,24 @@ def order_page():
     else:
         return render_template("order_items.html")
 
-@home_routes.route("/order/select", methods=["GET", "POST"])
-def order_select():
-    print("GENERATING Order selection form...")
-
-    if request.method == "POST":
-        print("FORM DATA:", dict(request.form)) #> {'zip_code': '20057'}
-        selection = dict(request.form)
-    elif request.method == "GET":
-        print("URL PARAMS:", dict(request.args))
-        selection = dict(request.args)
-
-    print(selection)
-    
-    return render_template("subtotal.html", results = CFA_items, restauraunt = 'CFA')
+#@home_routes.route("/order/select", methods=["GET", "POST"])
+#def order_select():
+#    print("GENERATING Order selection form...")
+#
+#    if request.method == "POST":
+#        print("FORM DATA:", dict(request.form)) #> {'zip_code': '20057'}
+#        selection = dict(request.form)
+#    elif request.method == "GET":
+#        print("URL PARAMS:", dict(request.args))
+#        selection = dict(request.args)
+#
+#    print(selection)
+#    
+#    return render_template("subtotal.html", results = CFA_items, restauraunt = 'CFA')
 
 @home_routes.route("/order/subtotal", methods=["GET", "POST"])
 def order_subtotal():
-    print("GENERATING Order selection form...")
+    print("GENERATING Order subtotal form...")
 
     if request.method == "POST":
         print("FORM DATA:", dict(request.form)) #> {'zip_code': '20057'}
@@ -58,6 +58,10 @@ def order_subtotal():
         print("URL PARAMS:", dict(request.args))
         selection = dict(request.args)
 
+    selection = choices_converter(selection)
+    subtotal = subtotal_calc(selection)
+    print("entered subtotal homeroute")
+    print(to_usd(subtotal))
     
     
     return render_template("subtotal.html", results = CFA_items, restauraunt = 'CFA')
