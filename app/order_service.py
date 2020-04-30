@@ -19,7 +19,23 @@ CFA_items =[
 
 ]
 
-EPI_items = []
+EPI_items = [
+    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
+    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
+    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05}
+]
+
+Starbucks_Items = [
+    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
+    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
+    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05}
+]
+
+Wiseys_items = [
+    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
+    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
+    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05}
+]
 def to_usd(my_price):
     """
     Converts a numeric value to usd-formatted string, for printing and display purposes.

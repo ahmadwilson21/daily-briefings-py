@@ -2,7 +2,7 @@
 # web_app/routes/home_routes.py
 
 from flask import Blueprint, render_template, flash, redirect, request
-from app.order_service import restaurant_list, CFA_items, EPI_items, subtotal_calc, choices_converter, to_usd
+from app.order_service import restaurant_list, CFA_items, EPI_items,Wiseys_items,Starbucks_Items, subtotal_calc, choices_converter, to_usd
 
 home_routes = Blueprint("home_routes", __name__)
 
@@ -29,6 +29,12 @@ def order_page():
     if(selection["name"] == "CFA"):
         print("selected name is CFA")
         return render_template("order_items.html", results = CFA_items, restaurant = "CFA") #takes me to order_items.html
+    elif(selection["name"] == "Wisey's"):
+        print("selected name is Wiseys")
+        return render_template("order_items.html", results =Wiseys_items, restaurant = "Wisey's") #takes me to order_items.html
+    elif(selection["name"] == "Epicurean"):
+        print("selected name is Epicurean")
+        return render_template("order_items.html", results =EPI_items, restaurant = "Epicurean") #takes me to order_items.html
     else:
         return render_template("order_items.html")
 
@@ -58,13 +64,13 @@ def order_subtotal():
         print("URL PARAMS:", dict(request.args))
         selection = dict(request.args)
 
-    selection = choices_converter(selection)
+    selection = choices_converter(selection) #'[{"name": 'name', "price": 3.4}]'
     subtotal = subtotal_calc(selection)
     print("entered subtotal homeroute")
     print(to_usd(subtotal))
+    subtotal= to_usd(subtotal)
     
-    
-    return render_template("subtotal.html", results = CFA_items, restauraunt = 'CFA')
+    return render_template("subtotal.html", results = selection, subtotal = subtotal)
 @home_routes.route("/about")
 def about():
     print("VISITED THE ABOUT PAGE...")

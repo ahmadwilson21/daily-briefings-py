@@ -4,8 +4,31 @@
 
 {% block content %}
 
-    <h1>About Me</h1>
+    <h1>Reciept</h1>
 
     <p>todo write some stuff here</p>
 
+   
+        {% for selection in results%}
+            <label>{{ selection["name"] }} | ${{selection["price"]}} </label> <br>
+        {% endfor %}
+        <h3>Subtotal = {{subtotal}} </h3>
+        
+
+        <form action="/users/create" method="POST">
+
+            <label>Full Name:</label>
+            <input type="text" name="full_name" placeholder="Example User" value="Example User">
+            <br>
+    
+            <label>Email Address:</label>
+            <input type="text" name="email_address" placeholder="me@example.com" value="me@example.com">
+            <br>
+    
+            <label>Georgetown ID Number</label>
+            <input type="text" name="GU_ID" placeholder="00000000" value="00000000">
+            <br>
+
+            <button>Submit</button>
+        </form>
 {% endblock %}
