@@ -1,4 +1,20 @@
 
+# app/order_service.py
+
+
+from dotenv import load_dotenv
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+load_dotenv()
+
+# Google Sheets API Keys
+DOCUMENT_ID = os.enviroxn.get("GOOGLE_SHEET_ID", "OOPS")
+SHEET_NAME = os.environ.get("SHEET_NAME", "products")
+
+
+
+
 
 restaurant_list =[{
     'id': 1 ,'name': 'Epicurean'}, 

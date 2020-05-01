@@ -3,3 +3,5 @@
 .env
 
 __pycache__
+
+app/auth/google_api_credentials.json
