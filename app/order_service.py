@@ -5,11 +5,11 @@
 from dotenv import load_dotenv
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-
+import os
 load_dotenv()
 
 # Google Sheets API Keys
-DOCUMENT_ID = os.enviroxn.get("GOOGLE_SHEET_ID", "OOPS")
+DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
 SHEET_NAME = os.environ.get("SHEET_NAME", "products")
 
 
