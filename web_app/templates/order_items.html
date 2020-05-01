@@ -13,8 +13,9 @@
             
             {% for result in results %}
             
-            <input type='checkbox' name="{{result['name']}}" value="{{result['price']}}"  > 
+            <input type='checkbox' name="{{result['name']}}" value="{{result['price']}}" > 
             <label ></label>{{ result["name"] }} ${{ result["price"] }} <!--${{ result["price"] }}--> </label><br>
+          
             {% endfor %}
         
             <br>

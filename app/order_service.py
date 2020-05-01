@@ -4,28 +4,62 @@ restaurant_list =[{
     'id': 1 ,'name': 'Epicurean'}, 
     
     {'id': 2, 'name': 'CFA'}, 
-    {'id': 3, 'name': "Wisey's"}
-
+    {'id': 3, 'name': "Wisey's"},
+    {'id': 4, 'name': "Starbucks"}
+    ]
+orders_list = []
 
 
 
     
-]
+
 
 CFA_items =[
     {'id': 1, 'name': 'CFA Sandwhich', 'category': 'sandwhich', 'price': 3.05},
     {'id': 2, 'name': 'Meal CFA Sandwhich', 'category': 'sandwhich', 'price': 5.95},
-    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05}
-
-]
-
-EPI_items = [
+    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
+    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
+    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
+    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
+    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
+    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
+    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
+    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
+    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
+    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05},
+    {'id': 1, 'name': 'CFA Sandwhich', 'category': 'sandwhich', 'price': 3.05},
+    {'id': 2, 'name': 'Meal CFA Sandwhich', 'category': 'sandwhich', 'price': 5.95},
+    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
+    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
+    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
+    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
+    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
+    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
+    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
+    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
+    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
+    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05},
+    {'id': 1, 'name': 'CFA Sandwhich', 'category': 'sandwhich', 'price': 3.05},
+    {'id': 2, 'name': 'Meal CFA Sandwhich', 'category': 'sandwhich', 'price': 5.95},
+    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
+    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
+    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
+    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
+    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
+    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
+    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
     {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
     {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
     {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05}
 ]
 
-Starbucks_Items = [
+Starbucks_items = [
+    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
+    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
+    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95}
+]
+
+EPI_items= [
     {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
     {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
     {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05}
@@ -50,13 +84,6 @@ def subtotal_calc(item_selections):
     for item in item_selections:
         subtotal = subtotal + float(item["price"])
     return subtotal
-#def subtotal_calc(item_selections, restaurant_items):
-#    subtotal = 0
-#    for selection in item_selections:
-#        for item in restaurant_items:
-#            if selection == item['name']:
-#                subtotal = subtotal + item['price']
-#    return subtotal
 
 def choices_converter(choice_dict): 
     #converts a dictionary with attributes {'specific name': 'specific value','specific name': 'specific value'} to 

@@ -10,9 +10,12 @@
 
    
         {% for selection in results%}
+        <div style="display:flex; justify-content:flex-end; width:20%; padding:0;" >
             <label>{{ selection["name"] }} | ${{selection["price"]}} </label> <br>
+        </div>
         {% endfor %}
-        <h3>Subtotal = {{subtotal}} </h3>
+        <hr >
+        <h3>Subtotal = {{subtotal}}  {{}}</h3>
         
 
         <form action="/users/create" method="POST">

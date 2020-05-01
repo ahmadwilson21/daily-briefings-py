@@ -2,7 +2,7 @@
 # web_app/routes/home_routes.py
 
 from flask import Blueprint, render_template, flash, redirect, request
-from app.order_service import restaurant_list, CFA_items, EPI_items,Wiseys_items,Starbucks_Items, subtotal_calc, choices_converter, to_usd
+from app.order_service import restaurant_list, CFA_items, EPI_items,Wiseys_items,Starbucks_items, subtotal_calc, choices_converter, to_usd, orders_list
 
 home_routes = Blueprint("home_routes", __name__)
 
@@ -35,6 +35,9 @@ def order_page():
     elif(selection["name"] == "Epicurean"):
         print("selected name is Epicurean")
         return render_template("order_items.html", results =EPI_items, restaurant = "Epicurean") #takes me to order_items.html
+    elif(selection["name"] == "Starbucks"):
+        print("selected name is Starbucks")
+        return render_template("order_items.html", results =Starbucks_items, restaurant = "Starbucks") #takes me to order_items.html
     else:
         return render_template("order_items.html")
 
@@ -88,6 +91,8 @@ def create_user():
     #print("RECIEVED FROM INPUTS")
     print("FORM DATA:", dict(request.form)) #> {'full_name': 'Example User', 'email_address': 'me@example.com', 'country': 'US'}
     user = dict(request.form)
+    orders_list.append(user)
+    print(orders_list)
     # todo: store in a database or google sheet! ADD This person to a google sheet datastore
     flash(f"User '{user['full_name']}' created successfully!", "danger")
     #flash(f"User '{user['full_name']}' created successfully! (TODO)", "warning")
