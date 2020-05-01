@@ -15,7 +15,7 @@
                
                 {% for result in results %}
                
-                <img src="static/{{result['name']}}.jpg" width ="128" height ="128" />
+                  <img src="static/{{result['name']}}.jpg" width ="128" height ="100" alt = "{{result['name']}}"/>
                   <input type="radio" id=restaurant name= "name"  value="{{result['name']}}" multiple>
                   <label for="male">{{ result["name"] }} <!--${{ result["price"] }}--> </label><br>
                   

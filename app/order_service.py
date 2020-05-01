@@ -15,8 +15,8 @@ orders_list = []
 
 
 CFA_items =[
-    {'id': 1, 'name': 'CFA Sandwhich', 'category': 'sandwhich', 'price': 3.05},
-    {'id': 2, 'name': 'Meal CFA Sandwhich', 'category': 'sandwhich', 'price': 5.95},
+    {'id': 1, 'name': 'CFA-Sandwhich', 'category': 'sandwhich', 'price': 3.05},
+    {'id': 2, 'name': 'Meal-CFA-Sandwhich', 'category': 'sandwhich', 'price': 5.95},
     {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
     {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
     {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
