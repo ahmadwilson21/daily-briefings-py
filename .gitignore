@@ -10,6 +10,7 @@ __pycache__/
 *.DS_STORE
 
 __pycache__
+
 .pytest_cache
 
 
@@ -136,3 +137,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+app/auth/google_api_credentials.json
+
