@@ -8,10 +8,11 @@
 
     <p>todo write some stuff here</p>
 
-   
+    
         {% for selection in results%}
+        
         <div style="display:flex; justify-content:flex-end; width:20%; padding:0;" >
-            <label>{{ selection["name"] }} | ${{selection["price"]}} </label> <br>
+            <label>{{ selection["name"] }} | ${{selection["price"]}} {{p}}</label> <br>
         </div>
         {% endfor %}
         <hr >

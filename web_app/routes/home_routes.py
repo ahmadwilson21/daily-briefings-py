@@ -25,7 +25,7 @@ def order_page():
         selection = dict(request.args)
 
     
-    print(selection["name"])
+    print(CFA_items)
 
     if(selection["name"] == "CFA"):
         print("selected name is CFA")

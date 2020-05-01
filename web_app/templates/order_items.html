@@ -12,10 +12,9 @@
         <form>
             
             {% for result in results %}
-
-            <img src= "../static/{{result['name']}}.jpg" width ="128" height ="100"> <!--alt = "{{result['name']}}"/> -->
-            <input type='checkbox' name="{{result['name']}}" value="{{result['price']}}" > 
-            <label ></label>{{ result["name"] }} ${{ result["price"] }} <!--${{ result["price"] }}--> </label><br>
+            <img src= "{{result['Image Link']}}" width ="128" height ="100" alt = "{{result['Name']}}"/> 
+            <input type='checkbox' name="{{result['Name']}}" value="{{result['Price']}}" > 
+            <label ></label>{{ result["Name"] }} {{ result["Price"] }} <!--${{ result["price"] }}--> </label><br>
           
             {% endfor %}
         
