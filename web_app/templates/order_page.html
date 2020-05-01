@@ -1,19 +1,24 @@
 {% extends "bootstrap_layout.html" %}
 
 {% block content %}
-
+  
+ 
+  
+  
     <h1> Hello </h1>
+    
     <ul>
         <form action="/order/page" method="POST">    <!--This takes me to orders/select home route and thus order_items.html-->
-
+          
             <h2>Restauraunt Selection:</h2>
               <form>
                
                 {% for result in results %}
                
-
+                <img src="static/chknsandwhich.jpg" width ="128" height ="128" />
                   <input type="radio" id=restaurant name= "name"  value="{{result['name']}}" multiple>
                   <label for="male">{{ result["name"] }} <!--${{ result["price"] }}--> </label><br>
+                  
                   
                   {% endfor %}
                   <br>
