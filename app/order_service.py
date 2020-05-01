@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import os
+from app.spreadsheet import get_spreadsheet
 load_dotenv()
 
 # Google Sheets API Keys
@@ -13,7 +14,10 @@ DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
 SHEET_NAME = os.environ.get("SHEET_NAME", "products")
 
 
-
+CFA_items = get_spreadsheet("Chick Fil A").get_all_records()
+Wiseys_items = get_spreadsheet("Wisey's").get_all_records()
+Starbucks_items = get_spreadsheet("Starbucks").get_all_records()
+EPI_items = get_spreadsheet("Epi").get_all_records()
 
 
 restaurant_list =[{
@@ -30,62 +34,62 @@ orders_list = []
     
 
 
-CFA_items =[
-    {'id': 1, 'name': 'CFA-Sandwhich', 'category': 'sandwhich', 'price': 3.05},
-    {'id': 2, 'name': 'Meal-CFA-Sandwhich', 'category': 'sandwhich', 'price': 5.95},
-    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
-    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
-    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
-    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
-    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
-    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
-    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
-    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
-    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
-    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05},
-    {'id': 1, 'name': 'CFA Sandwhich', 'category': 'sandwhich', 'price': 3.05},
-    {'id': 2, 'name': 'Meal CFA Sandwhich', 'category': 'sandwhich', 'price': 5.95},
-    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
-    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
-    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
-    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
-    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
-    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
-    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
-    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
-    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
-    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05},
-    {'id': 1, 'name': 'CFA Sandwhich', 'category': 'sandwhich', 'price': 3.05},
-    {'id': 2, 'name': 'Meal CFA Sandwhich', 'category': 'sandwhich', 'price': 5.95},
-    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
-    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
-    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
-    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
-    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
-    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
-    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
-    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
-    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
-    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05}
-]
-
-Starbucks_items = [
-    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
-    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
-    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95}
-]
-
-EPI_items= [
-    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
-    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
-    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05}
-]
-
-Wiseys_items = [
-    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
-    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
-    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05}
-]
+#CFA_items =[
+#    {'id': 1, 'name': 'CFA-Sandwhich', 'category': 'sandwhich', 'price': 3.05},
+#    {'id': 2, 'name': 'Meal-CFA-Sandwhich', 'category': 'sandwhich', 'price': 5.95},
+#    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
+#    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
+#    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
+#    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
+#    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
+#    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
+#    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
+#    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
+#    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
+#    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05},
+#    {'id': 1, 'name': 'CFA Sandwhich', 'category': 'sandwhich', 'price': 3.05},
+#    {'id': 2, 'name': 'Meal CFA Sandwhich', 'category': 'sandwhich', 'price': 5.95},
+#    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
+#    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
+#    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
+#    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
+#    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
+#    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
+#    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
+#    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
+#    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
+#    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05},
+#    {'id': 1, 'name': 'CFA Sandwhich', 'category': 'sandwhich', 'price': 3.05},
+#    {'id': 2, 'name': 'Meal CFA Sandwhich', 'category': 'sandwhich', 'price': 5.95},
+#    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
+#    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
+#    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
+#    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
+#    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
+#    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
+#    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
+#    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
+#    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
+#    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05}
+#]
+#
+#Starbucks_items = [
+#    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
+#    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
+#    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95}
+#]
+#
+#EPI_items= [
+#    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
+#    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
+#    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05}
+#]
+#
+#Wiseys_items = [
+#    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
+#    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
+#    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05}
+#]
 def to_usd(my_price):
     """
     Converts a numeric value to usd-formatted string, for printing and display purposes.
