@@ -7,14 +7,14 @@ Sends you a customized email every morning, with information of interest such as
 Fork this repo and clone it onto your local computer (for example to your Desktop), then navigate there from the command-line:
 
 ```sh
-cd ~/Desktop/daily-briefings-py/
+cd ~/Desktop/final-project-py
 ```
 
 Create and activate a new Anaconda virtual environment, perhaps named "briefings-env":
 
 ```sh
-conda create -n briefings-env python=3.7
-conda activate briefings-env
+conda create -n final-env python=3.7
+conda activate final-env
 ```
 
 Then, from within the virtual environment, install package dependencies:
@@ -23,20 +23,22 @@ Then, from within the virtual environment, install package dependencies:
 pip install -r requirements.txt
 ```
 
-Obtain API Keys from the [Open Weather](https://home.openweathermap.org/api_keys), and [SendGrid](https://app.sendgrid.com/settings/api_keys) services. Create a new file called ".env" in the root directory of this repo, and paste the following contents inside, using your own values as appropriate:
+
 
 ```sh
 # .env example
 
 APP_ENV="development" # or set to "production" on Heroku server
 
-OPEN_WEATHER_API_KEY="___________"
-MY_ZIP="10017"
+GOOGLE_SHEET_ID = "abcd123"
 
-SENDGRID_API_KEY="_______________"
-MY_EMAIL_ADDRESS="hello@example.com"
 
-MY_NAME="Jon Snow"
+
+SENDGRID_API_KEY=""
+MY_EMAIL_ADDRESS="me@example.com"
+
+MY_NAME="John Snow"
+
 ```
 
 > IMPORTANT: remember to save the ".env" file :-D
