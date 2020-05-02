@@ -2,20 +2,30 @@
 {% extends "bootstrap_layout.html" %}
 {% block content %}
 
-    <h2>{{restaurant.title()}} Order Form</h2>
+    <h1>{{restaurant.title()}} Order Form</h1>
 
-    <p>Request A restaurant to order food from ...</p>
+    
 
  <form action="/order/subtotal" method="POST"> 
 
       <!--  results = cfa_items list> -->
         <form>
-            
+       
             {% for result in results %}
-            <img src= "{{result['Image Link']}}" width ="128" height ="100" alt = "{{result['Name']}}"/> 
-            <input type='checkbox' name="{{result['Name']}}" value="{{result['Price']}}" > 
-            <label ></label>{{ result["Name"] }} {{ result["Price"] }} <!--${{ result["price"] }}--> </label><br>
-          
+                {% if result["Image Link"] != "" %}
+                <input type='checkbox' id = "{{result['Item ID']}}"name="{{result['Name']}}" value="{{result['Price']}}" /> 
+                
+                <label for="{{result['Item ID']}}"><img src="{{result['Image Link']}}" width ="128" height ="100" alt = "" />{{ result["Name"] }} {{ result["Price"] }}</label>  <br>
+               <!-- <img src= "{{result['Image Link']}}" width ="128" height ="100" alt = ""/> -->
+                
+               {% else %}
+                <!-- <button style="margin:5px;"></button>-->
+                  <input type='checkbox' id = "{{result['Item ID']}}"name="{{result['Name']}}" value="{{result['Price']}}" /> 
+                
+                  <label  for="{{result['Item ID']}}">{{ result["Name"]}} {{ result["Price"]}}</label>  <br>
+                  
+                  {% endif %}
+                 
             {% endfor %}
         
             <br>
