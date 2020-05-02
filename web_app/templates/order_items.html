@@ -13,16 +13,18 @@
        
             {% for result in results %}
                 {% if result["Image Link"] != "" %}
+                <label for="{{result['Item ID']}}"><img src="{{result['Image Link']}}" width ="128" height ="100" alt = "" />{{ result["Name"] }} {{ result["Price"] }}</label>
                 <input type='checkbox' id = "{{result['Item ID']}}"name="{{result['Name']}}" value="{{result['Price']}}" /> 
                 
-                <label for="{{result['Item ID']}}"><img src="{{result['Image Link']}}" width ="128" height ="100" alt = "" />{{ result["Name"] }} {{ result["Price"] }}</label>  <br>
+                
                <!-- <img src= "{{result['Image Link']}}" width ="128" height ="100" alt = ""/> -->
                 
                {% else %}
                 <!-- <button style="margin:5px;"></button>-->
+                 <label  for="{{result['Item ID']}}">{{ result["Name"]}} {{ result["Price"]}}</label>
                   <input type='checkbox' id = "{{result['Item ID']}}"name="{{result['Name']}}" value="{{result['Price']}}" /> 
                 
-                  <label  for="{{result['Item ID']}}">{{ result["Name"]}} {{ result["Price"]}}</label>  <br>
+                  
                   
                   {% endif %}
                  
