@@ -10,10 +10,18 @@
 
       <!--  results = cfa_items list> -->
         <form>
-       
+          {% set position = 1 %} 
             {% for result in results %}
+            
+            {% set position = results.index(result) %} 
+            {% set temp = results[position] %}
+            {% set tempCat = temp["Category"] %}
+              {% if result["Category"] != results[position-1]["Category"] %}
+                <br><h2>{{result["Category"]}}</h2><br>
+              {% endif %}
+            
                 {% if result["Image Link"] != "" %}
-                <label for="{{result['Item ID']}}"><img src="{{result['Image Link']}}" width ="128" height ="100" alt = "" />{{ result["Name"] }} {{ result["Price"] }}</label>
+                <label for="{{result['Item ID']}}"><img src="{{result['Image Link']}}" width ="128" height ="100" alt = "" />{{  result["Name"] }} {{ result["Price"] }}</label>
                 <input type='checkbox' id = "{{result['Item ID']}}"name="{{result['Name']}}" value="{{result['Price']}}" /> 
                 
                 
@@ -24,10 +32,11 @@
                  <label  for="{{result['Item ID']}}">{{ result["Name"]}} {{ result["Price"]}}</label>
                   <input type='checkbox' id = "{{result['Item ID']}}"name="{{result['Name']}}" value="{{result['Price']}}" /> 
                 
+                   
                   
+              {% endif %}
                   
-                  {% endif %}
-                 
+              
             {% endfor %}
         
             <br>
