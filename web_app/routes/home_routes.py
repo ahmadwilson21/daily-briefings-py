@@ -26,21 +26,21 @@ def order_page():
 
     
     print(CFA_items)
-
-    if(selection["name"] == "CFA"):
-        print("selected name is CFA")
-        return render_template("order_items.html", results = CFA_items, restaurant = "CFA") #takes me to order_items.html
-    elif(selection["name"] == "Wisey's"):
-        print("selected name is Wiseys")
-        return render_template("order_items.html", results =Wiseys_items, restaurant = "Wisey's") #takes me to order_items.html
-    elif(selection["name"] == "Epicurean"):
-        print("selected name is Epicurean")
-        return render_template("order_items.html", results =EPI_items, restaurant = "Epicurean") #takes me to order_items.html
-    elif(selection["name"] == "Starbucks"):
-        print("selected name is Starbucks")
-        return render_template("order_items.html", results =Starbucks_items, restaurant = "Starbucks") #takes me to order_items.html
+    if(selection):
+        if(selection["name"] == "CFA"):
+            print("selected name is CFA")
+            return render_template("order_items.html", results = CFA_items, restaurant = "CFA") #takes me to order_items.html
+        elif(selection["name"] == "Wisey's"):
+            print("selected name is Wiseys")
+            return render_template("order_items.html", results =Wiseys_items, restaurant = "Wisey's") #takes me to order_items.html
+        elif(selection["name"] == "Epicurean"):
+            print("selected name is Epicurean")
+            return render_template("order_items.html", results =EPI_items, restaurant = "Epicurean") #takes me to order_items.html
+        elif(selection["name"] == "Starbucks"):
+            print("selected name is Starbucks")
+            return render_template("order_items.html", results =Starbucks_items, restaurant = "Starbucks") #takes me to order_items.html
     else:
-        return render_template("order_items.html")
+        return render_template("order_page.html",results = restaurant_list)
 
 #@home_routes.route("/order/select", methods=["GET", "POST"])
 #def order_select():

@@ -15,18 +15,22 @@
               <form>
                
                 {% for result in results %}
+                
                 <!-- <button style="margin:5px;"> -->
-                  <img src="static/{{result['name']}}.jpg" width ="128" height ="100" alt = "{{result['name']}}"/>
-                  <input type="radio" id=restaurant name= "name"  value="{{result['name']}}" multiple>
-                  <div>
-                  <label for="restaurant">{{ result["name"] }} <!--${{ result["price"] }}--> </label>
-                </div>
+                  <label class ="label1">
+                    
+                  <img src="static/{{result['name']}}.jpg" width ="225" height ="180" alt = "{{result['name']}}" />  
+                  <input type="radio" id=restaurant name= "name"  value="{{result['name']}}"  multiple>
+                  
+                </label>
+                  <!--${{ result["price"] }}--> 
+                
                   
                   {% endfor %}
                   <br>
-                  
+                  <div style="text-align: center;">
                    <button>Submit</button> 
-          
+                      </div>
                 </form>
    <!--     {% for hourly in results %}
         <li>{{ hourly["name"] }} | </li>
