@@ -4,24 +4,28 @@
 
 {% block content %}
 
-    <h1>Reciept</h1>
+    <h1>Receipt</h1>
 
-    <p>todo write some stuff here</p>
+    <!--<p>todo write some stuhh here</p> -->
 
     
         {% for selection in results%}
         
-        <div style="display:flex; justify-content:flex-end; width:20%; padding:0;" >
-            <label>{{ selection["name"] }} | ${{selection["price"]}} {{p}}</label> <br>
+        <div style="clear: both">
+            <h2 style="float:left; ">{{ selection["name"] }} </h2>
+            <h2 style="float:right; ">{{ selection["price"] }}  </h2>
         </div>
         {% endfor %}
+        <br>
         <hr >
-        <h3>Subtotal = {{subtotal}}  </h3>
-        
-
+        <div style="clear: both">
+        <h2 style="float:left;">Subtotal   </h2>
+        <h2 style="float:right;"> {{subtotal}}  </h2>
+        </div>
+        <br> <br>
         <form action="/users/create" method="POST">
-
-            <label>Full Name:</label>
+            
+            <label >Full Name:</label>
             <input type="text" name="full_name" placeholder="Example User" value="Example User">
             <br>
     

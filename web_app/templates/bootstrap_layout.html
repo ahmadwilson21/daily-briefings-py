@@ -46,14 +46,22 @@ label {
   text-align: center;
 }​
  }*/
+ .logo-image{
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-top: -6px;
+}
  h1, h2{
         text-align: center;
       }
       
 
-      html, #page { padding:0; margin:0;}
-			body { margin:0; padding:0; width:100%; color:black; font:normal 14px/2.5em Sans-Serif;} 
-			h1, h2, h3, h4, h5, h6 {color:black;}
+      html, #page { padding:0; margin:0; }
+			body { background-color:white; margin:0; padding:0; width:100%; color:black; font:normal 14px/2.5em Sans-Serif;  }/*url(https://i.pinimg.com/originals/47/4c/c0/474cc0ce864dfd65257f99ce0cfaf7ae.png); background-repeat: no-repeat ; background-position:top;  background-size:10%;background-color:white; margin:0; padding:0; width:100%; color:black; font:normal 14px/2.5em Sans-Serif;} */
+			
+      h1, h2, h3, h4, h5, h6 {color:black;}
 			#page { background:#eee;}
 			#header, #footer, #top-nav, #content, #content #contentbar, #content #sidebar { margin:0; padding:0;}
 						
@@ -165,8 +173,12 @@ label {
       ('/', 'order_page', 'Home')
     ] -%}
     {% set active_page = active_page|default('index') -%}
-    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="/">GU Food Ordering System</a>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #414141";>
+      <a class="navbar-brand" href="/">GU Food Ordering System </a>
+       <!-- <div class="logo-image">
+          <img src="https://i.pinimg.com/originals/47/4c/c0/474cc0ce864dfd65257f99ce0cfaf7ae.png" class="img-fluid">
+    </div>-->
+     
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -197,7 +209,7 @@ label {
       <!-- FOOTER -->
       <div id="footer">
         <hr>
-        &copy; Copyright 2019 Prof. MJ Rossetti |
+        &copy; Copyright  |
         <a href="https://github.com/prof-rossetti/">source</a>
       </div>
     </div>
