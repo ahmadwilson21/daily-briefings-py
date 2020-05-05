@@ -37,9 +37,17 @@ def sendEmail(toEmail, message):
     #Todo Edit message Text
     email_body = "Thank you for using the Georgetown Food Services!"
     email_body = email_body + "\n"
-    email_body = email_body + "Your order has been placed. The total was: " + str(subtotal)"
+    email_body = email_body + "Your order has been placed.The items you order are:"
+    email_body = email_body + "\n"
+    
+    # for item in message:
+        #email_body = email_body + item["item_dict"]["name"]
+        #email_body = email_body + "\n"
+    email_body = email_body + "The total was: " + str(message["subtotal"])
     email_body = email_body + "\n"
     email_body = email_body + "Enjoy!" 
+
+    print(email_body)
 
     content = Content("text/plain", email_body)
     mail = Mail(from_email, subject, to_email, content)

@@ -4,6 +4,7 @@
 from flask import Blueprint, render_template, flash, redirect, request
 from flask import Flask, url_for
 from app.order_service import restaurant_list, CFA_items, EPI_items,Wiseys_items,Starbucks_items, subtotal_calc, choices_converter, to_usd, orders_list
+from app.send_email import sendEmail
 
 home_routes = Blueprint("home_routes", __name__)
 
@@ -94,6 +95,7 @@ def create_user():
     user = dict(request.form)
     orders_list.append(user)
     print(orders_list)
+    sendEmail(user['email_address'],user)
     # todo: store in a database or google sheet! ADD This person to a google sheet datastore
     flash(f"User '{user['full_name']}' with email '{user['email_address']}' created successfully!", "danger")
     #flash(f"User '{user['full_name']}' created successfully! (TODO)", "warning")
