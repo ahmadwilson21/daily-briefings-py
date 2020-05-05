@@ -11,15 +11,17 @@ load_dotenv()
 
 # Google Sheets API Keys
 DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
+NEW_SHEET_ID = os.environ.get("NEW_SHEET_ID", "OOPS")
 SHEET_NAME = os.environ.get("SHEET_NAME", "products")
 
 
-CFA_items = get_spreadsheet("Chick Fil A").get_all_records()
-Wiseys_items = get_spreadsheet("Wisey's").get_all_records()
-Starbucks_items = get_spreadsheet("Starbucks").get_all_records()
-EPI_items = get_spreadsheet("Epi").get_all_records()
+CFA_items = get_spreadsheet("Chick Fil A",0).get_all_records()
+Wiseys_items = get_spreadsheet("Wisey's",0).get_all_records()
+Starbucks_items = get_spreadsheet("Starbucks",0).get_all_records()
+EPI_items = get_spreadsheet("Epi",0).get_all_records()
 
-
+newSheet = get_spreadsheet("Epi",2)
+num_rows = len(newSheet.get_all_records())
 restaurant_list =[{
     'id': 1 ,'name': 'Epicurean'}, 
     
@@ -31,7 +33,22 @@ orders_list = []
 
 
 
-    
+def getValues(value_dict,newSheet):
+    next_row=[]
+    num_rows = len(newSheet.get_all_records())+1
+   # next_row = {
+   #             
+#
+   #             'name': name, 
+   #             'price': price,
+   #             
+   #             }
+    #PRODUCTS_LIST.append(next_row) #adds the new row to product list
+    next_row = list(value_dict.values()) #collects values in order to add to the google sheet
+    num_rows = num_rows + 1 #the new location of the object is the last row position + 1
+    newSheet.insert_row(next_row, num_rows) #inserts new row into sheet
+
+
 
 
 #CFA_items =[

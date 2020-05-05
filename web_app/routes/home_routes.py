@@ -3,8 +3,11 @@
 
 from flask import Blueprint, render_template, flash, redirect, request
 from flask import Flask, url_for
-from app.order_service import restaurant_list, CFA_items, EPI_items,Wiseys_items,Starbucks_items, subtotal_calc, choices_converter, to_usd, orders_list
+import json
+from app.order_service import restaurant_list, CFA_items, EPI_items,Wiseys_items,Starbucks_items, subtotal_calc, choices_converter, to_usd, orders_list, getValues, newSheet
 from app.send_email import sendEmail
+from app.spreadsheet import get_spreadsheet
+import ast
 
 home_routes = Blueprint("home_routes", __name__)
 
@@ -82,11 +85,6 @@ def about():
     #return "About Me (TODO)"
     return render_template("about.html")
 
-@home_routes.route("/users/new")
-def new_user():
-    print("VISITED THE NEW USER REGISTRATION PAGE...")
-    #return "Sign Up for our Product! (TODO)"
-    return render_template("new_user_form.html")
 
 @home_routes.route("/users/create", methods=["POST","GET"]) #responding to post requests
 def create_user():
@@ -95,6 +93,9 @@ def create_user():
     user = dict(request.form)
     orders_list.append(user)
     print(orders_list)
+    getValues(user, newSheet)
+    user['item_dict'] = ast.literal_eval(user['item_dict'])
+    
     sendEmail(user['email_address'],user)
     # todo: store in a database or google sheet! ADD This person to a google sheet datastore
     flash(f"User '{user['full_name']}' with email '{user['email_address']}' created successfully!", "danger")
