@@ -7,13 +7,13 @@ from dotenv import load_dotenv
 import sendgrid
 from sendgrid.helpers.mail import * # source of Email, Content, Mail, etc.
 
-def sendEmail(toEmail, subtotal):
+def sendEmail(toEmail, message):
     """
     Sends an email to a specified email address using the Sendgrid API
 
     Params: 
         toEmail(string) the email that you want to send the message to
-        prompt(string) the message that you want to send
+        message(string) the message that you want to send
     
     Example: sendEmail("me@123.com", "Reminder, this is an example email")
 
@@ -30,14 +30,18 @@ def sendEmail(toEmail, subtotal):
 
     # COMPILE REQUEST PARAMETERS (PREPARE THE EMAIL)
 
-
-
     from_email = Email(MY_EMAIL_ADDRESS)
     to_email = Email(toEmail)
-    subject = "Georgetown-Grocers Receipt"
+    subject = "[Georgetown Food Services] Your order has been placed"
+
     #Todo Edit message Text
-    message_text = "" + str(subtotal)
-    content = Content("text/plain", message_text)
+    email_body = "Thank you for using the Georgetown Food Services!"
+    email_body = email_body + "\n"
+    email_body = email_body + "Your order has been placed. The total was: " + str(subtotal)"
+    email_body = email_body + "\n"
+    email_body = email_body + "Enjoy!" 
+
+    content = Content("text/plain", email_body)
     mail = Mail(from_email, subject, to_email, content)
 
     # ISSUE REQUEST (SEND EMAIL)
