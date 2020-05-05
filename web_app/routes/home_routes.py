@@ -87,14 +87,15 @@ def new_user():
     #return "Sign Up for our Product! (TODO)"
     return render_template("new_user_form.html")
 
-@home_routes.route("/users/create", methods=["POST"]) #responding to post requests
+@home_routes.route("/users/create", methods=["POST","GET"]) #responding to post requests
 def create_user():
     #print("RECIEVED FROM INPUTS")
     print("FORM DATA:", dict(request.form)) #> {'full_name': 'Example User', 'email_address': 'me@example.com', 'country': 'US'}
     user = dict(request.form)
     orders_list.append(user)
     print(orders_list)
+    
     # todo: store in a database or google sheet! ADD This person to a google sheet datastore
-    flash(f"User '{user['full_name']}' created successfully!", "danger")
+    flash(f"User '{user['full_name']}' with email '{user['email_address']}' created successfully!", "danger")
     #flash(f"User '{user['full_name']}' created successfully! (TODO)", "warning")
     return redirect("/")
