@@ -2,7 +2,7 @@
 
 python-dotenv
 requests
-sendgrid==6.0.5
+sendgrid==5.6.0
 
 gspread
 oauth2client

@@ -94,7 +94,6 @@ def create_user():
     user = dict(request.form)
     orders_list.append(user)
     print(orders_list)
-    
     # todo: store in a database or google sheet! ADD This person to a google sheet datastore
     flash(f"User '{user['full_name']}' with email '{user['email_address']}' created successfully!", "danger")
     #flash(f"User '{user['full_name']}' created successfully! (TODO)", "warning")
