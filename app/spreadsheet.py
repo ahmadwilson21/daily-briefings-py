@@ -2,7 +2,7 @@
 
 from dotenv import load_dotenv
 import os
-
+import json
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -25,15 +25,34 @@ def get_spreadsheet(SHEET_NAME,sheet_num=0):
     DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
 
 
-    #Accesses the filepath given you have downloaded the google sheets api credentials in the auth folder 
-    CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "auth", "google_api_credentials.json")
-    
+
+   
     AUTH_SCOPE = [
         "https://www.googleapis.com/auth/spreadsheets", #> Allows read/write access to the user's sheets and their properties.
         "https://www.googleapis.com/auth/drive.file" #> Per-file access to files created or opened by the app.
     ]
+    
+    #Accesses the filepath given you have downloaded the google sheets api credentials in the auth folder 
+    '''
+    NOTE: There are two ways to pass the credentials into this program. Either uncomment this code lines 41-42
+    and comment lines 49-50 if youwant to reference the json file from the auth folder. Or you can just use the 
+    method provided after the comment below that uses the 'CREDENTIALS_JSON' env file.
 
+    CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "auth", "google_api_credentials.json")
     credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILEPATH, AUTH_SCOPE)
+    '''
+    
+    '''
+    Other way to access the json credentials. If you want to do access the json file from the auth folder
+    then comment this code out lines 49-50 and uncomment lines 41-42
+    '''
+
+    creds =(os.environ.get("CREDENTIALS_JSON","OOPS"))
+    if creds!= "OOPS":
+        credentials = ServiceAccountCredentials.from_json_keyfile_dict(json.loads(creds))
+    else:
+        CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "auth", "google_api_credentials.json")
+        credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILEPATH, AUTH_SCOPE)
 
 
     client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
