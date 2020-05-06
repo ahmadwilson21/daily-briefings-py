@@ -1,6 +1,6 @@
 # final-project/test/order_test.py
 
-from app.order_service import to_usd, subtotal_calc, choices_converter
+from app.order_service import restaurant_id, to_usd, subtotal_calc, choices_converter
 
 def test_to_usd():
     result = to_usd(1500)
