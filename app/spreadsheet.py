@@ -8,7 +8,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 
 #Custom function that returns a list of dictionaries from a google sheet
-def get_spreadsheet(SHEET_NAME,sheet_num):
+def get_spreadsheet(SHEET_NAME,sheet_num=0):
     """
     Provides access to a google sheet. It returns the google sheet from the unique website
     identifier that was input in the GOOGLE_SHEET_ID env variable.
@@ -20,7 +20,7 @@ def get_spreadsheet(SHEET_NAME,sheet_num):
     """
 
     DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
-    output_id = os.environ.get("NEW_SHEET_ID", "OOPS")
+    #output_id = os.environ.get("NEW_SHEET_ID", "OOPS")
     
     #SHEET_NAME = os.environ.get("SHEET_NAME", "Products")
 
@@ -39,13 +39,19 @@ def get_spreadsheet(SHEET_NAME,sheet_num):
     #
 
     client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
-  
-    if sheet_num==2:
+    
+    if sheet_num==1:
+        DOCUMENT_ID = os.environ.get("STARBUCKS_SHEET_ID", "OOPS")
+    elif sheet_num==2:
+        DOCUMENT_ID = os.environ.get("CFA_SHEET_ID", "OOPS")
+    elif sheet_num==3:
+        DOCUMENT_ID = os.environ.get("WISEYS_SHEET_ID", "OOPS")
+    elif sheet_num==4:
+        DOCUMENT_ID = os.environ.get("EPI_SHEET_ID", "OOPS")
         
-        doc = client.open_by_key(output_id) #> <class 'gspread.models.Spreadsheet'>
+    
         
-    else:
-        doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
+    doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
         
 
    # print("\n--------------------------------")
