@@ -12,10 +12,10 @@ def restaurant_id(items_list,restaurant_item_list):
     Depending on the items submitted in the website, this function matches the first item's name to its
     respective restaurant. 
 
-    params: items_list(dictionary), restaurant_item_list(list) 
+    Params: items_list(dictionary), restaurant_item_list(list) 
 
-    Example: flag = restaurant_id({'name': 'Chicken Sandwhich'}, ["Chicken Sandwhich", "Milkshake", "Waffle Fries"])
-             flag = True
+    Example: restaurant_id({'name': 'Chicken Sandwhich'}, ["Chicken Sandwhich", "Milkshake", "Waffle Fries"])
+
     """
     if items_list['item_dict'][0]['name'] in str(restaurant_item_list):
         return True 
@@ -25,9 +25,9 @@ def restaurant_id(items_list,restaurant_item_list):
 
 def UserInfoToSheet(user_info,newSheet):
     """
-    Adds a customers user information to a designated output google sheet datastore
+    Adds a customer's purchase information to a designated output google sheet datastore
 
-    param: user_info(dictionary), newSheet(gspread Worksheet)
+    Params: user_info(dictionary), newSheet(gspread Worksheet)
     
     """
     next_row=[]
@@ -51,6 +51,8 @@ def to_usd(my_price):
     Returns: $4,000.44
     """
     return f"${my_price:,.2f}" #> $12,000.71
+
+
 def subtotal_calc(item_selections):
     """
     Calculates subtotal of a list of products by adding together the price of each individual item
@@ -58,10 +60,10 @@ def subtotal_calc(item_selections):
     Param: item_selections (list) 
     
     Example: 
-    item_selections=[{'name': 'item1', 'price': 2.50}, {'name': 'item2', 'price': 4.50}]
+    item_selections=[{'name': 'item1', 'price': 2.56}, {'name': 'item2', 'price': 4.52}]
     subtotal_calc(item_selections)
     
-    Returns: 7.00
+    Returns: 7.08
     """
     subtotal = 0
     for item in item_selections:
@@ -78,26 +80,26 @@ def choices_converter(choice_dict):
     
     Example: choices_converter({'specific name': 'specific value', 'different name': 'different value'})
     
-    Returns: [{'name': 'specific name', 'price': 'specific value}, 
-            {'name': 'different value', 'price': 'different value'}]
+    Returns: [
+        {'name': 'specific name', 'price': 'specific value}, 
+        {'name': 'different value', 'price': 'different value'}
+        ]
     """
 
     converted_list = []
     for choice in choice_dict:
         next_row={
             'name': choice,
-            'price': choice_dict[choice] 
-
+            'price': choice_dict[choice]
         }
         converted_list.append(next_row)
     return converted_list
 
+
 #This list represents the various restaurant options on the website. 
-restaurant_list =[{
-    
-    'id': 1 ,'name': 'Epicurean'}, 
-    
-    {'id': 2, 'name': 'CFA'}, 
+restaurant_list =[   
+    {'id': 1, 'name': "Epicurean"}, 
+    {'id': 2, 'name': "CFA"}, 
     {'id': 3, 'name': "Wisey's"},
     {'id': 4, 'name': "Starbucks"}
     ]
