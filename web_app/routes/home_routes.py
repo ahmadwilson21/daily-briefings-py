@@ -2,9 +2,9 @@
 # web_app/routes/home_routes.py
 
 from flask import Blueprint, render_template, flash, redirect, request
-from flask import Flask, url_for
-import json
-from app.order_service import restaurant_list, CFA_items, EPI_items,Wiseys_items,Starbucks_items, subtotal_calc, choices_converter, to_usd, orders_list, UserInfoToSheet, restaurant_id
+from flask import Flask
+from app.order_service import restaurant_list, CFA_items, EPI_items,Wiseys_items,Starbucks_items
+from app.order_service import subtotal_calc, choices_converter, to_usd, orders_list, UserInfoToSheet, restaurant_id
 from app.send_email import sendEmail
 from app.spreadsheet import get_spreadsheet
 import ast
@@ -13,8 +13,8 @@ home_routes = Blueprint("home_routes", __name__)
 restaurant = "None"
 @home_routes.route("/")
 def index():
+    #Home Page
     print("VISITED THE HOME PAGE...")
-    #return "Welcome Home (TODO)"
     return render_template("order_page.html", results = restaurant_list)
 
 @home_routes.route("/order/page", methods=["GET", "POST"])
@@ -29,9 +29,8 @@ def order_page():
         selection = dict(request.args)
 
     
-    print(CFA_items)
+    # returns the appropriate menu item based on which restaurant you selected
     if(selection):
-        restaurant=selection["name"]
         if(selection["name"] == "CFA"):
             print("selected name is CFA")
             return render_template("order_items.html", results = CFA_items, restaurant = "CFA") #takes me to order_items.html
@@ -49,6 +48,8 @@ def order_page():
 
 @home_routes.route("/order/subtotal", methods=["GET", "POST"])
 def order_subtotal():
+    #Generates your menu subtotal
+
     print("GENERATING Order subtotal form...")
 
     if request.method == "POST":
@@ -58,10 +59,9 @@ def order_subtotal():
         print("URL PARAMS:", dict(request.args))
         selection = dict(request.args)
 
+
     selection = choices_converter(selection) #'[{"name": 'name', "price": 3.4}]'
     subtotal = subtotal_calc(selection)
-    print("entered subtotal homeroute")
-    print(to_usd(subtotal))
     subtotal= to_usd(subtotal)
     
     return render_template("subtotal.html", results = selection, subtotal = subtotal)
@@ -74,35 +74,37 @@ def about():
 
 @home_routes.route("/users/create", methods=["POST","GET"]) #responding to post requests
 def create_user():
-    #print("RECIEVED FROM INPUTS")
     print("FORM DATA:", dict(request.form)) #> {'full_name': 'Example User', 'email_address': 'me@example.com', 'country': 'US'}
     user = dict(request.form)
     orders_list.append(user)
     print(orders_list)
-    print (restaurant)
     
-    
-    #print(temp['item_dict'])
-    
+    #user[item_dict] is returned as a string of values so this converts it into an accessible list
     user['item_dict'] = ast.literal_eval(user['item_dict'])
     
-    #if item is from wiseys restaurant
+    #if item is from Starbucks restaurant
     if restaurant_id(user,Starbucks_items):
         newSheet = get_spreadsheet("Starbucks",1)
-        
+
+    #if item is from CFA restaurant 
     elif restaurant_id(user,CFA_items):
         newSheet = get_spreadsheet("Chick Fil A",2)
 
+    #if item is from Wisey's restaurant
     elif restaurant_id(user,Wiseys_items):
         newSheet = get_spreadsheet("Wisey's",3)
 
+    #if item is from Epicurean restaurant
     elif restaurant_id(user,EPI_items):
         newSheet = get_spreadsheet("Epi",4)
 
+    #This adds the items from the request form into the specified google sheet datastore
     UserInfoToSheet(dict(request.form), newSheet)
 
+    #Sends email to the user with their form information
     sendEmail(user['email_address'],user)
-    # todo: store in a database or google sheet! ADD This person to a google sheet datastore
-    flash(f"User '{user['full_name']}' with email '{user['email_address']}' created successfully!", "danger")
-    #flash(f"User '{user['full_name']}' created successfully! (TODO)", "warning")
+
+
+    flash(f"User '{user['full_name']}' with email '{user['email_address']}' created successfully!", "success")
+    
     return redirect("/")

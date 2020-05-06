@@ -4,7 +4,7 @@
   
  
   
-  
+   <!--GU Orders Home Page-->
     <h1> Welcome to Georgetown's Food Ordering System </h1>
     
     
@@ -16,14 +16,14 @@
                
                 {% for result in results %}
                 
-                <!-- <button style="margin:5px;"> -->
+               
                   <label class ="label1">
                     
                   <img src="static/{{result['name']}}.jpg" width ="225" height ="180" alt = "{{result['name']}}" />  
                   <input type="radio" id=restaurant name= "name"  value="{{result['name']}}"  multiple>
                   
                 </label>
-                  <!--${{ result["price"] }}--> 
+          
                 
                   
                   {% endfor %}
@@ -32,10 +32,7 @@
                    <button> Submit</button> 
                       </div>
                 </form>
-   <!--     {% for hourly in results %}
-        <li>{{ hourly["name"] }} | </li>
-    {% endfor %}
-   -->  
+ 
     </ul>
 
 {% endblock %}

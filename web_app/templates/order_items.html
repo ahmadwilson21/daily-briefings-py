@@ -8,7 +8,7 @@
 
  <form action="/order/subtotal" method="POST"> 
 
-      <!--  results = cfa_items list> -->
+      <!-- Order Form provides item images, prices, and names -->
         <form>
           {% set position = 1 %} 
             {% for result in results %}
@@ -27,10 +27,10 @@
                 <input type="checkbox"  id = "{{result['Item ID']}}"name="{{result['Name']}}" value="{{result['Price']}}"  />  </label>
               
                 
-               <!-- <img src= "{{result['Image Link']}}" width ="128" height ="100" alt = ""/> -->
+               
                 
                {% else %}
-                <!-- <button style="margin:5px;"></button>-->
+                
                 
                  <label  for="{{result['Item ID']}}">{{ result["Name"]}} ${{ result["Price"]}} 
                   <input type='checkbox'  id = "{{result['Item ID']}}"name="{{result['Name']}}" value="{{result['Price']}}" /> </label>

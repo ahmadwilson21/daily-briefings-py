@@ -6,7 +6,6 @@ import pprint
 from dotenv import load_dotenv
 import sendgrid
 from sendgrid.helpers.mail import * # source of Email, Content, Mail, etc.
-import ast
 
 def sendEmail(toEmail, message):
     """
@@ -21,7 +20,7 @@ def sendEmail(toEmail, message):
     Returns: 202 (if email was sent successfully)
 
     """
-    #message['item_dict'] = ast.literal_eval(message['item_dict'])
+
     SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY", "OOPS, please set env var called 'SENDGRID_API_KEY'")
     MY_EMAIL_ADDRESS = os.environ.get("MY_EMAIL_ADDRESS", "OOPS, please set env var called 'MY_EMAIL_ADDRESS'")
 
@@ -35,18 +34,17 @@ def sendEmail(toEmail, message):
     to_email = Email(toEmail)
     subject = "[Georgetown Food Services] Your order has been placed"
     
-    #Todo Edit message Text
+    #Message Text
     email_body = "Thank you for using the Georgetown Food Services!"
     email_body = email_body + "\n"
     email_body = email_body + "Your order has been placed.The items you order are:"
+
+    #collects each item selection and outputs it into email body
     for item in message['item_dict']: 
         email_body = email_body + "\n"+(item['name']+" "+item['price'])
-    email_body = email_body + "\n"
 
-    
-    # for item in message:
-        #email_body = email_body + item["item_dict"]["name"]
-        #email_body = email_body + "\n"
+
+    email_body = email_body + "\n"
     email_body = email_body + "The total was: " + str(message["subtotal"])
     email_body = email_body + "\n"
     email_body = email_body + "Enjoy!" 

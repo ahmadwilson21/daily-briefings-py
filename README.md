@@ -1,6 +1,7 @@
-# Daily Briefings Service (Python)
+# Georgetown Food Ordering Service (Python)
 
-Sends you a customized email every morning, with information of interest such as the upcoming weather forecast.
+A Web App that allows students to preorder food from one of four restaurants. Sends an email to 
+user after completing the ordering process
 
 ## Setup
 
@@ -10,7 +11,7 @@ Fork this repo and clone it onto your local computer (for example to your Deskto
 cd ~/Desktop/final-project-py
 ```
 
-Create and activate a new Anaconda virtual environment, perhaps named "briefings-env":
+Create and activate a new Anaconda virtual environment, perhaps named "final-env":
 
 ```sh
 conda create -n final-env python=3.7
@@ -23,7 +24,51 @@ Then, from within the virtual environment, install package dependencies:
 pip install -r requirements.txt
 ```
 
+### Google Sheets API Installation
 
+Downloading API Credentials
+
+Visit the Google Developer Console(https://console.developers.google.com/cloud-resource-manager). Create a new project, or select an existing one. Click on your project, then from the project page, search for the "Google Sheets API" and enable it. Also search for the "Google Drive API" and enable it.
+
+From either API page, or from the API Credentials page(https://console.developers.google.com/apis/credentials), follow a process to create and download credentials to use the APIs. Fill in the form to find out what kind of credentials:
+
+    API: "Google Sheets API"
+    Calling From: "Web Server"
+    Accessing: "Application Data"
+    Using Engines: "No"
+
+The suggested credentials will be for a service account. Follow the prompt to create a new service account with a role of: "Project" > "Editor", and create credentials for that service account. Download the resulting .json file and store it in your project repo in a location called "auth/google_api_credentials.json"
+The path should be as follows:
+```sh
+cd final-project-py/auth/google_api_credentials.json
+```
+
+Use this example google sheet https://docs.google.com/spreadsheets/d/1pNcQBXxmKpusOGHKbYZ_IOn5Bew3v4466xeMfk95Oa4/edit#gid=0 or create your own. Note the document's unique identifier (e.g. 1pNcQBXxmKpusOGHKbYZ_IOn5Bew3v4466xeMfk95Oa4) from its URL, and store the identifier in an environment variable called GOOGLE_SHEET_ID.
+
+If you create your own, make sure it contains four sheets called "Starbucks", "Wisey's", "Chick Fil A", "Epi" with column headers Item ID, Name, Category, Price, and Image Link. And modify the document's sharing settings to grant "edit" privileges to the "client email" address located in the credentials file.
+
+Additionally, you need four Google Sheets for outputting the location of the data as well. We provide these
+Google Sheets Worksheets for each restaurant: 
+
+"Starbucks" - https://docs.google.com/spreadsheets/d/15QlB-cxEhAanuWyiypuL0Ckq4ibYO0CF1b0aplg-MGY/edit?ts=5eb18c5d#gid=0 - STARBUCKS_SHEET_ID="15QlB-cxEhAanuWyiypuL0Ckq4ibYO0CF1b0aplg-MGY"
+
+"Chick Fil A" - https://docs.google.com/spreadsheets/d/1I9-2Mi3jfeqUb-4fG7O6YbyQ1Avlbpp9SVqaFuhtRBI/edit#gid=1689009743
+CFA_SHEET_ID="1I9-2Mi3jfeqUb-4fG7O6YbyQ1Avlbpp9SVqaFuhtRBI"
+
+"Wisey's"-https://docs.google.com/spreadsheets/d/16IYUNq5mOwNcTPI0RqZHXHR6x3LAo45lmXbR01pCUnc/edit#gid=1904370108
+WISEYS_SHEET_ID = "16IYUNq5mOwNcTPI0RqZHXHR6x3LAo45lmXbR01pCUnc"
+
+"Epi" - https://docs.google.com/spreadsheets/d/1tHleFMMoucS7IkeUsjrJpDUWMp3oxXnGrC_dzsQw1DE/edit#gid=0
+EPI_SHEET_ID = "1tHleFMMoucS7IkeUsjrJpDUWMp3oxXnGrC_dzsQw1DE"
+
+If you do not use these, create four sheets and add their IDs to the respective
+sheet. If you replace the restaurant, then you need to replace the ENV ID
+and replace the call in the app/spreadsheet.py file
+
+### Sendgrid API Installation
+First, sign up for a free account here (https://signup.sendgrid.com/), then click the link in a confirmation email to verify your account. Then create an API Key here (https://app.sendgrid.com/settings/api_keys) with "full access" permissions.
+
+To setup the usage examples below, store the API Key value in an environment variable called SENDGRID_API_KEY. Also set an environment variable called MY_EMAIL_ADDRESS to be the email address you just associated with your SendGrid account (e.g. "abc123@gmail.com"). You will send emails from this account
 
 ```sh
 # .env example
@@ -31,47 +76,27 @@ pip install -r requirements.txt
 APP_ENV="development" # or set to "production" on Heroku server
 
 GOOGLE_SHEET_ID = "abcd123"
-
-
-
-SENDGRID_API_KEY=""
+WISEYS_SHEET_ID = "12345abc"
+CFA_SHEET_ID = "12345abc"
+EPI_SHEET_ID = "12345abc"
+STARBUCKS_SHEET_ID = "12345abc"
+SENDGRID_API_KEY="exampleid12345"
 MY_EMAIL_ADDRESS="me@example.com"
 
-MY_NAME="John Snow"
 
 ```
 
 > IMPORTANT: remember to save the ".env" file :-D
 
-## Usage
 
-## WEb App Usage
+
+## Web App Usage
 Run the app:
 
 On Mac:
 ```py
 $ FLASK_APP=web_app flask run
 ```
-From within the virtual environment, ensure you can run each of the following files and see them produce their desired results of: printing today's weather forecast, and sending an example email, respectively.
 
-```sh
-python -m app.weather_service # note the module-syntax invocation
-#> TODAY'S WEATHER FORECAST IS ...
-```
 
-```sh
-python -m app.email_service # note the module-syntax invocation
-#> SENDING EMAIL TO ...
-```
 
-> NOTE: the Sendgrid emails might first start showing up in spam, until you designate them as coming from a trusted source (i.e. "Looks Safe")
->
-> ![](https://user-images.githubusercontent.com/1328807/77856232-c7a0ff80-71c3-11ea-9dce-7a32b88701c6.png)
-
-As long as each of those scripts works by itself, you can send the daily briefing email:
-
-```sh
-python -m app.daily_briefing # note the module-syntax invocation
-```
-
-![](https://user-images.githubusercontent.com/1328807/77860069-173ef580-71db-11ea-83c6-5897bb9f4f51.png)

@@ -7,7 +7,7 @@ sendgrid==5.6.0
 gspread
 oauth2client
 
-
+pytest
 Flask
 
 #Heroku needs this in order to run our app on the server

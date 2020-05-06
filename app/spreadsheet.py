@@ -7,7 +7,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
 
-#Custom function that returns a list of dictionaries from a google sheet
+#Custom function that returns a google sheet
 def get_spreadsheet(SHEET_NAME,sheet_num=0):
     """
     Provides access to a google sheet. It returns the google sheet from the unique website
@@ -16,13 +16,14 @@ def get_spreadsheet(SHEET_NAME,sheet_num=0):
     Requirements: Google API credentials service key saved as a .json file
     named google_api_credentials.json and downloaded into the folder named auth
 
+    Params: SHEET_NAME(string), sheet_num(integer)
+
+    Example: get_spreadsheet("Starbucks",1)
     Returns: type = 'gspread.models.Worksheet'>
     """
 
     DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
-    #output_id = os.environ.get("NEW_SHEET_ID", "OOPS")
-    
-    #SHEET_NAME = os.environ.get("SHEET_NAME", "Products")
+
 
     #Accesses the filepath given you have downloaded the google sheets api credentials in the auth folder 
     CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "auth", "google_api_credentials.json")
@@ -34,12 +35,15 @@ def get_spreadsheet(SHEET_NAME,sheet_num=0):
 
     credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILEPATH, AUTH_SCOPE)
 
-    #
-    # READ SHEET VALUES
-    #
 
     client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
     
+    #Depending on what restaurant was chosen this is where the code is output to
+    """
+    Note: These are based on the restaurant identifiers in the env file. If your restaurant output
+    sheets differ, then these must be changed in order to reflect the sheet ID's. Must make corresponding
+    change in the homeroutes create_user() function as well
+    """
     if sheet_num==1:
         DOCUMENT_ID = os.environ.get("STARBUCKS_SHEET_ID", "OOPS")
     elif sheet_num==2:
@@ -50,14 +54,10 @@ def get_spreadsheet(SHEET_NAME,sheet_num=0):
         DOCUMENT_ID = os.environ.get("EPI_SHEET_ID", "OOPS")
         
     
-        
-    doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
-        
-
-   # print("\n--------------------------------")
-    #print("SPREADSHEET:", doc.title)
-    #print("--------------------------------\n")
     
+    doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
+    
+    #The specified named sheet of you Google Sheets Worksheet is returned
     sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
 
     return sheet

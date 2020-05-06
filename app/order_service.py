@@ -5,65 +5,34 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import os
 from app.spreadsheet import get_spreadsheet
-load_dotenv()
 
-# Google Sheets API Keys
-DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
-NEW_SHEET_ID = os.environ.get("NEW_SHEET_ID", "OOPS")
-SHEET_NAME = os.environ.get("SHEET_NAME", "products")
 
-restaurant_list =[{
-    'id': 1 ,'name': 'Epicurean'}, 
-    
-    {'id': 2, 'name': 'CFA'}, 
-    {'id': 3, 'name': "Wisey's"},
-    {'id': 4, 'name': "Starbucks"}
-    ]
-def restaurant_id(items_list,restaurant_list):
-    print("Entered restaurant id func")
-    
-    
-    if items_list['item_dict'][0]['name'] in str(restaurant_list):
-        print("Yes happy ending")
+def restaurant_id(items_list,restaurant_item_list):
+    """
+    Depending on the items submitted in the website, this function matches the first item's name to its
+    respective restaurant. 
+
+    params: items_list(dictionary), restaurant_item_list(list) 
+
+    Example: flag = restaurant_id({'name': 'Chicken Sandwhich'}, ["Chicken Sandwhich", "Milkshake", "Waffle Fries"])
+             flag = True
+    """
+    if items_list['item_dict'][0]['name'] in str(restaurant_item_list):
         return True 
     else:
         return False
-
-    
-    
-
-CFA_items = get_spreadsheet("Chick Fil A").get_all_records()
-Wiseys_items = get_spreadsheet("Wisey's").get_all_records()
-Starbucks_items = get_spreadsheet("Starbucks").get_all_records()
-EPI_items = get_spreadsheet("Epi").get_all_records()
-
-###REPLACE THESE WITH THE NAMES OF YOUR RESPECTIVE SHEETS, IF NOT USING PROVIDED EXAMPLE GOOGLE SHEET
-#Starbucks_Sheet = get_spreadsheet("Starbucks",1)
-#CFA_Sheet = get_spreadsheet("CFA",2)
-#Wiseys_Sheet = get_spreadsheet("Wisey's",3)
-#EPI_Sheet = get_spreadsheet("EPI",4)
-
-
-
-restaurant_list =[{
-    'id': 1 ,'name': 'Epicurean'}, 
-    
-    {'id': 2, 'name': 'CFA'}, 
-    {'id': 3, 'name': "Wisey's"},
-    {'id': 4, 'name': "Starbucks"}
-    ]
-orders_list = []
 
 
 def UserInfoToSheet(user_info,newSheet):
     """
     Adds a customers user information to a designated output google sheet datastore
+
+    param: user_info(dictionary), newSheet(gspread Worksheet)
+    
     """
     next_row=[]
     num_rows = len(newSheet.get_all_records())+1
- 
-    #PRODUCTS_LIST.append(next_row) #adds the new row to product list
-    #next_row = list(value_dict.values()) #collects values in order to add to the google sheet
+
     next_row = list(user_info.values())
     num_rows = num_rows + 1 #the new location of the object is the last row position + 1
     newSheet.insert_row(next_row, num_rows) #inserts new row into sheet
@@ -88,25 +57,29 @@ def subtotal_calc(item_selections):
     
     Param: item_selections (list) 
     
-    Example: subtotal_calc(item_selections)
+    Example: 
+    item_selections=[{'name': 'item1', 'price': 2.50}, {'name': 'item2', 'price': 4.50}]
+    subtotal_calc(item_selections)
     
-    Returns: $7.65
+    Returns: 7.00
     """
     subtotal = 0
     for item in item_selections:
         subtotal = subtotal + float(item["price"])
     return subtotal
 
+
 def choices_converter(choice_dict): 
 
     """
-    Converts a dictionary into a list of dictionary
+    Converts an unformatted dictionary into a properly formatted list of dictionaries
     
     Param: choice_dict (dictionary) 
     
-    Example: choices_converter(choice_dict)
+    Example: choices_converter({'specific name': 'specific value', 'different name': 'different value'})
     
-    Returns: a list of dictionaries 
+    Returns: [{'name': 'specific name', 'price': 'specific value}, 
+            {'name': 'different value', 'price': 'different value'}]
     """
 
     converted_list = []
@@ -119,100 +92,25 @@ def choices_converter(choice_dict):
         converted_list.append(next_row)
     return converted_list
 
+#This list represents the various restaurant options on the website. 
+restaurant_list =[{
+    
+    'id': 1 ,'name': 'Epicurean'}, 
+    
+    {'id': 2, 'name': 'CFA'}, 
+    {'id': 3, 'name': "Wisey's"},
+    {'id': 4, 'name': "Starbucks"}
+    ]
+
+#This is populated with orders in the home routes create_user() function
+orders_list = []
+
+#This gathers all the menu items from each sheet_name in the provided GOOGLE_SHEET_ID env variable
+#and is called from the homeroutes index() function.
+CFA_items = get_spreadsheet("Chick Fil A").get_all_records()
+Wiseys_items = get_spreadsheet("Wisey's").get_all_records()
+Starbucks_items = get_spreadsheet("Starbucks").get_all_records()
+EPI_items = get_spreadsheet("Epi").get_all_records()
 
 
 
-if __name__ == "__main__":
-
-    CFA_items = get_spreadsheet("Chick Fil A",0).get_all_records()
-    Wiseys_items = get_spreadsheet("Wisey's",0).get_all_records()
-    Starbucks_items = get_spreadsheet("Starbucks",0).get_all_records()
-    EPI_items = get_spreadsheet("Epi",0).get_all_records()
-
-    newSheet = get_spreadsheet("Epi",2)
-    num_rows = len(newSheet.get_all_records())
-    restaurant_list =[{
-        'id': 1 ,'name': 'Epicurean'}, 
-        
-        {'id': 2, 'name': 'CFA'}, 
-        {'id': 3, 'name': "Wisey's"},
-        {'id': 4, 'name': "Starbucks"}
-        ]
-    orders_list = []
-
-
-
-    def getValues(value_dict,newSheet):
-        next_row=[]
-        num_rows = len(newSheet.get_all_records())+1
-    # next_row = {
-    #             
-    #
-    #             'name': name, 
-    #             'price': price,
-    #             
-    #             }
-        #PRODUCTS_LIST.append(next_row) #adds the new row to product list
-        next_row = list(value_dict.values()) #collects values in order to add to the google sheet
-        num_rows = num_rows + 1 #the new location of the object is the last row position + 1
-        newSheet.insert_row(next_row, num_rows) #inserts new row into sheet
-
-
-
-
-    #CFA_items =[
-    #    {'id': 1, 'name': 'CFA-Sandwhich', 'category': 'sandwhich', 'price': 3.05},
-    #    {'id': 2, 'name': 'Meal-CFA-Sandwhich', 'category': 'sandwhich', 'price': 5.95},
-    #    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
-    #    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
-    #    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
-    #    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
-    #    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
-    #    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
-    #    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
-    #    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
-    #    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
-    #    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05},
-    #    {'id': 1, 'name': 'CFA Sandwhich', 'category': 'sandwhich', 'price': 3.05},
-    #    {'id': 2, 'name': 'Meal CFA Sandwhich', 'category': 'sandwhich', 'price': 5.95},
-    #    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
-    #    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
-    #    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
-    #    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
-    #    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
-    #    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
-    #    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
-    #    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
-    #    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
-    #    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05},
-    #    {'id': 1, 'name': 'CFA Sandwhich', 'category': 'sandwhich', 'price': 3.05},
-    #    {'id': 2, 'name': 'Meal CFA Sandwhich', 'category': 'sandwhich', 'price': 5.95},
-    #    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
-    #    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
-    #    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
-    #    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
-    #    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
-    #    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
-    #    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
-    #    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
-    #    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
-    #    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05}
-    #]
-    #
-    #Starbucks_items = [
-    #    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
-    #    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
-    #    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95}
-    #]
-    #
-    #EPI_items= [
-    #    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
-    #    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
-    #    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05}
-    #]
-    #
-    #Wiseys_items = [
-    #    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
-    #    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
-    #    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05}
-    #]
