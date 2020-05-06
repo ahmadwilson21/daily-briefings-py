@@ -2,13 +2,13 @@
 
 from app.order_service import restaurant_id, UserInfoToSheet, to_usd, subtotal_calc, choices_converter
 
-#def test_restaurant_id():
-#    test_item = {'name': 'Chicken Sandwhich'}
-#    
-#    test_restaurant_item_list = ['Chicken Sandwich', 'Chicken Nuggets', 'Chocolate Milkshake']
-#
-#    result = restaurant_id(test_item,test_restaurant_item_list)
-#    assert result == True
+def test_restaurant_id():
+    test_item = {'item_dict':[{'name': 'Chicken Sandwich'}]}
+    
+    test_restaurant_item_list = ['Chicken Sandwich', 'Chicken Nuggets', 'Chocolate Milkshake']
+
+    result = restaurant_id(test_item,test_restaurant_item_list)
+    assert result == True
 
 def test_to_usd():
     result = to_usd(1500)

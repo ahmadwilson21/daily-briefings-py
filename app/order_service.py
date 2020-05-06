@@ -14,7 +14,7 @@ def restaurant_id(items_list,restaurant_item_list):
 
     Params: items_list(dictionary), restaurant_item_list(list) 
 
-    Example: restaurant_id({'name': 'Chicken Sandwhich'}, ["Chicken Sandwhich", "Milkshake", "Waffle Fries"])
+    Example: restaurant_id('item_dict':[{'name': 'Chicken Sandwhich'}], ["Chicken Sandwhich", "Milkshake", "Waffle Fries"])
 
     """
     if items_list['item_dict'][0]['name'] in str(restaurant_item_list):
