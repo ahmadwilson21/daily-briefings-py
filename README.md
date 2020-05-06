@@ -56,7 +56,7 @@ CREDENTIALS_JSON='{
 Another way you could do this would be to download the resulting .json file. Rename it google_api_credentials.json and place it into the following directory.
 
 ```sh
-cd final-project-py/auth/google_api_credentials.json
+cd final-project-py/app/auth/google_api_credentials.json
 ```
 
 You would alter the final-project-py/app/spreadsheet.py file and uncomment the designated code to run the API credentials from there instead.

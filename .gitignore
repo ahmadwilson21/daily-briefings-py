@@ -13,6 +13,9 @@ __pycache__
 
 .pytest_cache
 
+#json
+*.json
+
 
 # Distribution / packaging
 .Python
