@@ -1,7 +1,6 @@
 # Georgetown Food Ordering Service Web App
 
-A Web App that allows students to preorder food from one of four restaurants. Sends an email to 
-user after completing the ordering process
+A Web App that allows students to preorder food from one of our four on-campus restaurants. Then, it sends an email to user after completing the ordering process.
 
 ## Setup
 
@@ -28,17 +27,17 @@ pip install -r requirements.txt
 
 #### Downloading API Credentials
 
-Visit the Google Developer Console(https://console.developers.google.com/cloud-resource-manager). Create a new project, or select an existing one. Click on your project, then from the project page, search for the "Google Sheets API" and enable it. Also search for the "Google Drive API" and enable it.
+Visit the Google Developer Console (https://console.developers.google.com/cloud-resource-manager). Create a new project, or select an existing one. Click on your project, then from the project page, search for the "Google Sheets API" and enable it. Also search for the "Google Drive API" and enable it.
 
-From either API page, or from the API Credentials page(https://console.developers.google.com/apis/credentials), follow a process to create and download credentials to use the APIs. Fill in the form to find out what kind of credentials:
+From either API page, or from the API Credentials page (https://console.developers.google.com/apis/credentials), follow the process to create and download credentials to use the APIs. Fill in the form to find out what kind of credentials:
 
     API: "Google Sheets API"
     Calling From: "Web Server"
     Accessing: "Application Data"
     Using Engines: "No"
 
-The suggested credentials will be for a service account. Follow the prompt to create a new service account with a role of: "Project" > "Editor", and create credentials for that service account. Download the resulting .json file. Place it
-into a CREDENTIALS_JSON env variable. 
+The suggested credentials will be for a service account. Follow the prompt to create a new service account with a role of: "Project" > "Editor", and create credentials for that service account. Download the resulting .json file. Place it into a CREDENTIALS_JSON env variable. 
+
 ```sh
 CREDENTIALS_JSON='{
  "type": "service_account",
@@ -53,12 +52,14 @@ CREDENTIALS_JSON='{
   "client_x509_cert_url": "https://www.googleapis.com/fsaifjsaofjsaofj"
 }'
 ```
+
 Another way you could do this would be to download the resulting .json file. Rename it google_api_credentials.json and place it into the following directory.
 
 ```sh
 cd final-project-py/auth/google_api_credentials.json
 ```
-You would alter the final-project-py/app/spreadsheet.py file and uncomment the designated code to run the api credentials from there instead.
+
+You would alter the final-project-py/app/spreadsheet.py file and uncomment the designated code to run the API credentials from there instead.
 
 ```sh
 cd final-project-py/app/spreadsheet.py
@@ -69,8 +70,7 @@ Use this example google sheet https://docs.google.com/spreadsheets/d/1pNcQBXxmKp
 
 If you create your own, make sure it contains four sheets called "Starbucks", "Wisey's", "Chick Fil A", "Epi" with column headers Item ID, Name, Category, Price, and Image Link. And modify the document's sharing settings to grant "edit" privileges to the "client email" address located in the credentials file.
 
-Additionally, you need four Google Sheets for outputting the location of the data as well. We provide these
-Google Sheets Worksheets for each restaurant: 
+Additionally, you need four Google Sheets for outputting the location of the data as well. We provide one Google Sheets worksheet for each restaurant: 
 
 "Starbucks" - https://docs.google.com/spreadsheets/d/15QlB-cxEhAanuWyiypuL0Ckq4ibYO0CF1b0aplg-MGY/edit?ts=5eb18c5d#gid=0 - 
 ```sh
@@ -136,8 +136,27 @@ Run the app:
 
 On Mac:
 ```py
-$ FLASK_APP=web_app flask run
+FLASK_APP=web_app flask run
 ```
 
+On Windows:
+```py
+export FLASK_APP=web_app 
+flask run
+```
+
+
+## Testing
+Install pytest package using the following command:
+
+```py
+pip install pytest
+```
+
+To run test, use the following python script:
+
+```py
+pytest
+```
 
 
