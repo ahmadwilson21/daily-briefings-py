@@ -23,10 +23,7 @@ def get_spreadsheet(SHEET_NAME,sheet_num=0):
     """
 
     DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
-
-
-
-   
+ 
     AUTH_SCOPE = [
         "https://www.googleapis.com/auth/spreadsheets", #> Allows read/write access to the user's sheets and their properties.
         "https://www.googleapis.com/auth/drive.file" #> Per-file access to files created or opened by the app.

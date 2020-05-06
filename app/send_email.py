@@ -32,20 +32,23 @@ def sendEmail(toEmail, message):
 
     from_email = Email(MY_EMAIL_ADDRESS)
     to_email = Email(toEmail)
-    subject = "[Georgetown Food Services] Your order has been placed"
+    subject = "[Georgetown Food Ordering Services] Your order has been placed"
     
     #Message Text
-    email_body = "Thank you for using the Georgetown Food Services!"
+    email_body = "Thank you for using the Georgetown Food Ordering Services!"
     email_body = email_body + "\n"
-    email_body = email_body + "Your order has been placed.The items you order are:"
+    email_body = email_body + "\n"
+    email_body = email_body + "Your order has been placed. Please find below your receipt: "
+    email_body = email_body + "\n"
 
     #collects each item selection and outputs it into email body
     for item in message['item_dict']: 
-        email_body = email_body + "\n"+(item['name']+" "+item['price'])
-
+        email_body = email_body + "\n" + " + " + (item['name'] + " $" + item['price'])
 
     email_body = email_body + "\n"
+    email_body = email_body + "\n"
     email_body = email_body + "The total was: " + str(message["subtotal"])
+    email_body = email_body + "\n"
     email_body = email_body + "\n"
     email_body = email_body + "Enjoy!" 
 

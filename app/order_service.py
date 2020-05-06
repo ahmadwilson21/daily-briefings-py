@@ -12,10 +12,10 @@ def restaurant_id(items_list,restaurant_item_list):
     Depending on the items submitted in the website, this function matches the first item's name to its
     respective restaurant. 
 
-    Param: items_list(dictionary), restaurant_item_list(list) 
+    Params: items_list(dictionary), restaurant_item_list(list) 
 
-    Example: flag = restaurant_id({'name': 'Chicken Sandwhich'}, ["Chicken Sandwhich", "Milkshake", "Waffle Fries"])
-             flag = True
+    Example: restaurant_id({'name': 'Chicken Sandwhich'}, ["Chicken Sandwhich", "Milkshake", "Waffle Fries"])
+
     """
     if items_list['item_dict'][0]['name'] in str(restaurant_item_list):
         return True 
@@ -27,7 +27,7 @@ def UserInfoToSheet(user_info,newSheet):
     """
     Adds a customer's purchase information to a designated output google sheet datastore
 
-    Param: user_info(dictionary), newSheet(gspread Worksheet)
+    Params: user_info(dictionary), newSheet(gspread Worksheet)
     
     """
     next_row=[]
@@ -95,12 +95,13 @@ def choices_converter(choice_dict):
         converted_list.append(next_row)
     return converted_list
 
+
 #This list represents the various restaurant options on the website. 
 restaurant_list =[   
-    {'id': 1, 'name': 'Epicurean'}, 
-    {'id': 2, 'name': 'CFA'}, 
-    {'id': 3, 'name': 'Wisey's'},
-    {'id': 4, 'name': 'Starbucks'}
+    {'id': 1, 'name': "Epicurean"}, 
+    {'id': 2, 'name': "CFA"}, 
+    {'id': 3, 'name': "Wisey's"},
+    {'id': 4, 'name': "Starbucks"}
     ]
 
 #This is populated with orders in the home routes create_user() function
