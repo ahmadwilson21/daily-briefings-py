@@ -4,13 +4,13 @@
 from flask import Blueprint, render_template, flash, redirect, request
 from flask import Flask, url_for
 import json
-from app.order_service import restaurant_list, CFA_items, EPI_items,Wiseys_items,Starbucks_items, subtotal_calc, choices_converter, to_usd, orders_list, getValues, newSheet
+from app.order_service import restaurant_list, CFA_items, EPI_items,Wiseys_items,Starbucks_items, subtotal_calc, choices_converter, to_usd, orders_list, UserInfoToSheet, restaurant_id
 from app.send_email import sendEmail
 from app.spreadsheet import get_spreadsheet
 import ast
 
 home_routes = Blueprint("home_routes", __name__)
-
+restaurant = "None"
 @home_routes.route("/")
 def index():
     print("VISITED THE HOME PAGE...")
@@ -31,6 +31,7 @@ def order_page():
     
     print(CFA_items)
     if(selection):
+        restaurant=selection["name"]
         if(selection["name"] == "CFA"):
             print("selected name is CFA")
             return render_template("order_items.html", results = CFA_items, restaurant = "CFA") #takes me to order_items.html
@@ -45,21 +46,6 @@ def order_page():
             return render_template("order_items.html", results =Starbucks_items, restaurant = "Starbucks") #takes me to order_items.html
     else:
         return render_template("order_page.html",results = restaurant_list)
-
-#@home_routes.route("/order/select", methods=["GET", "POST"])
-#def order_select():
-#    print("GENERATING Order selection form...")
-#
-#    if request.method == "POST":
-#        print("FORM DATA:", dict(request.form)) #> {'zip_code': '20057'}
-#        selection = dict(request.form)
-#    elif request.method == "GET":
-#        print("URL PARAMS:", dict(request.args))
-#        selection = dict(request.args)
-#
-#    print(selection)
-#    
-#    return render_template("subtotal.html", results = CFA_items, restauraunt = 'CFA')
 
 @home_routes.route("/order/subtotal", methods=["GET", "POST"])
 def order_subtotal():
@@ -93,9 +79,28 @@ def create_user():
     user = dict(request.form)
     orders_list.append(user)
     print(orders_list)
-    getValues(user, newSheet)
+    print (restaurant)
+    
+    
+    #print(temp['item_dict'])
+    
     user['item_dict'] = ast.literal_eval(user['item_dict'])
     
+    #if item is from wiseys restaurant
+    if restaurant_id(user,Starbucks_items):
+        newSheet = get_spreadsheet("Starbucks",1)
+        
+    elif restaurant_id(user,CFA_items):
+        newSheet = get_spreadsheet("Chick Fil A",2)
+
+    elif restaurant_id(user,Wiseys_items):
+        newSheet = get_spreadsheet("Wisey's",3)
+
+    elif restaurant_id(user,EPI_items):
+        newSheet = get_spreadsheet("Epi",4)
+
+    UserInfoToSheet(dict(request.form), newSheet)
+
     sendEmail(user['email_address'],user)
     # todo: store in a database or google sheet! ADD This person to a google sheet datastore
     flash(f"User '{user['full_name']}' with email '{user['email_address']}' created successfully!", "danger")
