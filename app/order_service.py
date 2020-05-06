@@ -14,14 +14,38 @@ DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
 NEW_SHEET_ID = os.environ.get("NEW_SHEET_ID", "OOPS")
 SHEET_NAME = os.environ.get("SHEET_NAME", "products")
 
+restaurant_list =[{
+    'id': 1 ,'name': 'Epicurean'}, 
+    
+    {'id': 2, 'name': 'CFA'}, 
+    {'id': 3, 'name': "Wisey's"},
+    {'id': 4, 'name': "Starbucks"}
+    ]
+def restaurant_id(items_list,restaurant_list):
+    print("Entered restaurant id func")
+    
+    
+    if items_list['item_dict'][0]['name'] in str(restaurant_list):
+        print("Yes happy ending")
+        return True 
+    else:
+        return False
 
-CFA_items = get_spreadsheet("Chick Fil A",0).get_all_records()
-Wiseys_items = get_spreadsheet("Wisey's",0).get_all_records()
-Starbucks_items = get_spreadsheet("Starbucks",0).get_all_records()
-EPI_items = get_spreadsheet("Epi",0).get_all_records()
+    
+    
 
-newSheet = get_spreadsheet("Epi",2)
-num_rows = len(newSheet.get_all_records())
+CFA_items = get_spreadsheet("Chick Fil A").get_all_records()
+Wiseys_items = get_spreadsheet("Wisey's").get_all_records()
+Starbucks_items = get_spreadsheet("Starbucks").get_all_records()
+EPI_items = get_spreadsheet("Epi").get_all_records()
+
+###REPLACE THESE WITH THE NAMES OF YOUR RESPECTIVE SHEETS, IF NOT USING PROVIDED EXAMPLE GOOGLE SHEET
+#Starbucks_Sheet = get_spreadsheet("Starbucks",1)
+#CFA_Sheet = get_spreadsheet("CFA",2)
+#Wiseys_Sheet = get_spreadsheet("Wisey's",3)
+#EPI_Sheet = get_spreadsheet("EPI",4)
+
+
 restaurant_list =[{
     'id': 1 ,'name': 'Epicurean'}, 
     
@@ -32,81 +56,19 @@ restaurant_list =[{
 orders_list = []
 
 
-
-def getValues(value_dict,newSheet):
+def UserInfoToSheet(user_info,newSheet):
+    """
+    Adds a customers user information to a designated output google sheet datastore
+    """
     next_row=[]
     num_rows = len(newSheet.get_all_records())+1
-   # next_row = {
-   #             
-#
-   #             'name': name, 
-   #             'price': price,
-   #             
-   #             }
+ 
     #PRODUCTS_LIST.append(next_row) #adds the new row to product list
-    next_row = list(value_dict.values()) #collects values in order to add to the google sheet
+    #next_row = list(value_dict.values()) #collects values in order to add to the google sheet
+    next_row = list(user_info.values())
     num_rows = num_rows + 1 #the new location of the object is the last row position + 1
     newSheet.insert_row(next_row, num_rows) #inserts new row into sheet
 
-
-
-
-#CFA_items =[
-#    {'id': 1, 'name': 'CFA-Sandwhich', 'category': 'sandwhich', 'price': 3.05},
-#    {'id': 2, 'name': 'Meal-CFA-Sandwhich', 'category': 'sandwhich', 'price': 5.95},
-#    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
-#    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
-#    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
-#    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
-#    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
-#    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
-#    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
-#    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
-#    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
-#    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05},
-#    {'id': 1, 'name': 'CFA Sandwhich', 'category': 'sandwhich', 'price': 3.05},
-#    {'id': 2, 'name': 'Meal CFA Sandwhich', 'category': 'sandwhich', 'price': 5.95},
-#    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
-#    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
-#    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
-#    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
-#    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
-#    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
-#    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
-#    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
-#    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
-#    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05},
-#    {'id': 1, 'name': 'CFA Sandwhich', 'category': 'sandwhich', 'price': 3.05},
-#    {'id': 2, 'name': 'Meal CFA Sandwhich', 'category': 'sandwhich', 'price': 5.95},
-#    {'id': 3, 'name': 'Milkshake', 'category': 'sandwhich', 'price': 3.05},
-#    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
-#    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
-#    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95},
-#    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
-#    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
-#    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05},
-#    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
-#    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
-#    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05}
-#]
-#
-#Starbucks_items = [
-#    {'id': 1, 'name': 'Cafe Mocha', 'category': 'Coffee', 'price': 3.65},
-#    {'id': 2, 'name': 'Iced Coffee', 'category': 'Coffee', 'price': 2.65},
-#    {'id': 3, 'name': 'Coffee Frappuccino', 'category': 'Frappuccino', 'price': 3.95}
-#]
-#
-#EPI_items= [
-#    {'id': 1, 'name': 'Mrs.Reuben', 'category': 'Sandwhich', 'price': 7.25},
-#    {'id': 2, 'name': 'Epi Chicken Quesadilla', 'category': 'Quesadilla', 'price': 7.45},
-#    {'id': 3, 'name': 'Epi Veggie Burrito', 'category': 'Burrito', 'price': 3.05}
-#]
-#
-#Wiseys_items = [
-#    {'id': 1, 'name': 'Chicken Madness', 'category': 'Best Seller', 'price': 7.25},
-#    {'id': 2, 'name': 'Burger Madness', 'category': 'Best Seller', 'price': 7.45},
-#    {'id': 3, 'name': 'Quarter Pound Burger', 'category': 'Burger', 'price': 3.05}
-#]
 def to_usd(my_price):
     """
     Converts a numeric value to usd-formatted string, for printing and display purposes.
@@ -124,7 +86,8 @@ def subtotal_calc(item_selections):
 
 def choices_converter(choice_dict): 
     #converts a dictionary with attributes {'specific name': 'specific value','specific name': 'specific value'} to 
-    #a list [{'name': 'specific name'}, {'value': 'specific value'}, {'name': 'specific name'}, {'value': 'specific value'}]
+    #a list [{'name': 'specific name','value': 'specific value'}, {'name': 'specific name', 'value': 'specific value'}]
+    
     converted_list = []
     for choice in choice_dict:
         next_row={
